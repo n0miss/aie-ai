@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aïe. — Dare the shift.</title>
+  <meta name="description" content="AI transformation consulting for trading firms. Speed, precision, and automation — built for financial markets.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue:   #0052FF;
+      --red:    #FF3B30;
+      --yellow: #FFD600;
+      --black:  #111111;
+      --gray:   #F5F5F5;
+      --gray2:  #E8E8E8;
+      --gray3:  #AAAAAA;
+      --white:  #FFFFFF;
+      --font: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      color: var(--black);
+      background: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px;
+      height: 68px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray2);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,.07); }
+
+    .nav-logo {
+      font-size: 22px; font-weight: 700; letter-spacing: -.5px; text-decoration: none; color: var(--black);
+    }
+    .nav-logo .dot { color: var(--blue); }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--black);
+      font-size: 15px; font-weight: 500; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+
+    .nav-cta {
+      background: var(--blue); color: var(--white);
+      padding: 10px 22px; border-radius: 4px;
+      text-decoration: none; font-size: 14px; font-weight: 600;
+      transition: background .2s;
+    }
+    .nav-cta:hover { background: #003dd1; }
+
+    .lang-switch {
+      display: flex; align-items: center; gap: 6px; margin-left: 8px;
+    }
+    .lang-switch button {
+      background: none; border: none; cursor: pointer; padding: 2px 4px;
+      font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--gray3);
+      transition: color .2s;
+    }
+    .lang-switch button.active { color: var(--blue); }
+    .lang-switch button:hover { color: var(--blue); }
+    .lang-sep { color: var(--gray2); font-size: 13px; }
+
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px;
+    }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; }
+
+    /* ─── HERO ────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(60deg, #EAF1FF 40%, var(--white) 40%);
+      display: flex; align-items: center;
+      padding: 120px 60px 80px;
+      position: relative; overflow: hidden;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 40px));
+      margin-bottom: -40px; z-index: 7;
+    }
+
+    .hero-content { max-width: 640px; position: relative; z-index: 2; }
+
+    .hero-logo {
+      font-size: clamp(72px, 10vw, 128px);
+      font-weight: 700;
+      letter-spacing: -4px;
+      line-height: 1;
+      margin-bottom: 28px;
+    }
+    .hero-logo .dot { color: var(--blue); }
+
+    .hero-tagline {
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 600; letter-spacing: -1.5px; line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .hero-tagline .blue  { color: var(--blue); }
+    .hero-tagline .red   { color: var(--red); }
+    .hero-tagline .green { color: #00C853; }
+    .hero-tagline-link { color: inherit; text-decoration: none; }
+    .hero-tagline-link:hover { text-decoration: underline; }
+
+    .hero-sub {
+      font-size: 20px; color: #555; font-weight: 400;
+      line-height: 1.5; margin-bottom: 48px;
+    }
+
+    .hero-actions { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--blue); color: var(--white);
+      padding: 16px 32px; font-size: 16px; font-weight: 600;
+      border: none; border-radius: 4px; cursor: pointer;
+      text-decoration: none; transition: background .2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: #003dd1; }
+
+    .btn-ghost {
+      color: var(--black); font-size: 16px; font-weight: 500;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: color .2s;
+    }
+    .btn-ghost:hover { color: var(--blue); }
+    .btn-ghost svg { transition: transform .2s; }
+    .btn-ghost:hover svg { transform: translateX(4px); }
+
+    /* floating cubes */
+    .hero-visual {
+      position: absolute;
+      right: clamp(20px, 6vw, 80px);
+      top: 50%; transform: translateY(-50%);
+      width: clamp(320px, 44vw, 560px);
+      pointer-events: none;
+    }
+    .hero-visual img {
+      width: 100%; height: auto; display: block;
+      opacity: 0.7;
+      mask-image: radial-gradient(ellipse at center, black 25%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 25%, transparent 70%);
+    }
+
+
+    /* ─── VALUES BAR ──────────────────────────────── */
+    .values-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray2);
+      padding: 36px 60px;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 24px; flex-wrap: wrap;
+    }
+
+    .value-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      flex: 1; min-width: 160px;
+    }
+
+    .value-icon-wrap {
+      width: 40px; height: 40px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .value-text-label {
+      font-weight: 600; font-size: 13px; text-transform: uppercase;
+      letter-spacing: .8px; margin-bottom: 3px;
+    }
+    .value-text-desc { font-size: 13px; color: var(--gray3); }
+
+    .value-divider {
+      width: 1px; background: var(--gray2); align-self: stretch; margin: 0 8px;
+    }
+
+    /* ─── SECTION BASE ────────────────────────────── */
+    .section {
+      padding: 100px 60px;
+      position: relative;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 40px));
+      margin-bottom: -40px; z-index: 5;
+    }
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(32px, 4vw, 52px); font-weight: 700;
+      letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 20px;
+    }
+    .section-body {
+      font-size: 18px; color: #555; line-height: 1.65; max-width: 560px;
+    }
+
+    .section-rule {
+      width: 40px; height: 3px; background: var(--blue); margin-bottom: 20px;
+    }
+
+    /* ─── THE SHIFT ───────────────────────────────── */
+    .shift-section {
+      background: linear-gradient(60deg, var(--gray) 40%, var(--white) 40%);
+      padding: 100px 60px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+
+    .shift-visual {
+      display: flex; align-items: center; gap: 32px;
+    }
+
+    .shift-box {
+      background: var(--white); border: 1px solid var(--gray2);
+      border-radius: 8px; padding: 32px; flex: 1;
+    }
+    .shift-box h4 {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
+      color: var(--gray3); margin-bottom: 16px;
+    }
+
+    .shift-grid {
+      display: grid; grid-template-columns: repeat(3, 28px); gap: 8px; margin-bottom: 20px;
+    }
+    .shift-cell {
+      width: 28px; height: 28px; background: var(--gray2); border-radius: 3px;
+    }
+
+    .shift-desc { font-size: 12px; color: var(--gray3); line-height: 1.5; }
+    .shift-desc strong { display: block; font-weight: 600; color: #888; margin-bottom: 4px; }
+
+    .shift-arrow { font-size: 28px; color: var(--black); flex-shrink: 0; }
+
+    .shift-box.after { border-color: var(--blue); border-width: 2px; }
+    .shift-box.after h4 { color: var(--blue); }
+
+    .node-grid {
+      display: grid; grid-template-columns: repeat(3, 28px); gap: 8px; margin-bottom: 20px; position: relative;
+    }
+    .node {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .node.blue  { background: var(--blue); }
+    .node.red   { background: var(--red); }
+    .node.yellow{ background: var(--yellow); }
+    .node.empty { background: transparent; border: 2px dashed var(--blue); }
+    .node.gray  { background: var(--gray2); }
+
+    .shift-desc.after strong { color: var(--blue); }
+
+    /* ─── SERVICES ────────────────────────────────── */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2px; margin-top: 64px;
+      border: 1px solid var(--gray2);
+    }
+
+    .service-card {
+      background: var(--white); padding: 40px;
+      border-right: 1px solid var(--gray2);
+      transition: background .25s;
+    }
+    .service-card:hover { background: var(--gray); }
+    .service-card:last-child { border-right: none; }
+
+    .service-icon {
+      margin-bottom: 24px;
+    }
+
+    .service-title {
+      font-size: 20px; font-weight: 600; margin-bottom: 12px; letter-spacing: -.3px;
+    }
+    .service-desc { font-size: 15px; color: #666; line-height: 1.6; }
+
+    .service-tag {
+      display: inline-block; margin-top: 20px;
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--blue); border-bottom: 2px solid var(--blue); padding-bottom: 2px;
+    }
+
+    /* ─── WHY AIE ─────────────────────────────────── */
+    .why-section {
+      background: linear-gradient(60deg, #EAF9EF 40%, var(--white) 40%);
+      color: var(--black); padding: 100px 60px;
+      position: relative;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 40px));
+      margin-bottom: -40px; z-index: 3;
+    }
+    .why-section .section-label { color: var(--blue); }
+    .why-section .section-title { color: var(--black); }
+
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 48px; margin-top: 64px;
+    }
+
+    .why-item {}
+    .why-number {
+      font-size: 48px; font-weight: 700; color: var(--blue);
+      letter-spacing: -2px; line-height: 1; margin-bottom: 12px;
+    }
+    .why-title {
+      font-size: 18px; font-weight: 600; margin-bottom: 10px;
+    }
+    .why-desc { font-size: 15px; color: #888; line-height: 1.6; }
+
+    /* ─── CTA ─────────────────────────────────────── */
+    .cta-section {
+      background: linear-gradient(60deg, var(--blue) 40%, #1a5cff 40%);
+      color: var(--white);
+      padding: 80px 48px; text-align: center;
+      position: relative;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 40px));
+      margin-bottom: -40px; z-index: 1;
+    }
+
+    .cta-section .section-title {
+      color: var(--white); max-width: 640px; margin: 0 auto 16px;
+    }
+
+    .cta-section .section-body {
+      color: rgba(255,255,255,0.75); max-width: 480px; margin: 0 auto 48px;
+    }
+
+    .btn-white {
+      background: var(--white); color: var(--blue);
+      padding: 16px 40px; font-size: 16px; font-weight: 700;
+      border: none; border-radius: 4px; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: transform .2s;
+    }
+    .btn-white:hover { transform: translateY(-2px); }
+
+    .cta-email {
+      margin-top: 24px; font-size: 15px; color: rgba(255,255,255,0.65);
+    }
+    .cta-email a { color: var(--white); text-decoration: underline; }
+
+    /* ─── REVEAL ANIMATIONS ───────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+
+    /* ─── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .hero { padding: 100px 24px 60px; }
+      .hero-visual { display: none; }
+
+      .values-bar { padding: 28px 24px; }
+      .value-divider { display: none; }
+
+      .section { padding: 72px 24px; }
+
+      .services-grid { grid-template-columns: 1fr; }
+
+      .shift-section { grid-template-columns: 1fr; padding: 72px 24px; gap: 48px; }
+
+      .why-section, .cta-section { padding: 72px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─────────────────────────────────────────────── -->
+<nav id="nav">
+  <a href="#" class="nav-logo"><span style="color:var(--blue)">Aï</span><span style="font-style:normal;">e</span><span class="dot">.</span></a>
+  <ul class="nav-links">
+    <li><a href="#services"><span data-i18n="navWhatWord" style="color:#FF3B30">What</span><span data-i18n="navWhatRest" style="color:var(--black)">'s Aïe</span><span style="color:var(--blue)">.</span></a></li>
+    <li><a href="#why"><span data-i18n="navWhyWord" style="color:#00C853">Why</span><span data-i18n="navWhyRest" style="color:var(--black)"> Aïe</span><span style="color:var(--blue)">.</span></a></li>
+  </ul>
+  <div class="lang-switch">
+    <button type="button" data-lang-btn="en" onclick="setLang('en')">EN</button>
+    <span class="lang-sep">/</span>
+    <button type="button" data-lang-btn="fr" onclick="setLang('fr')">FR</button>
+  </div>
+  <a href="#contact" class="nav-cta"><span data-i18n="navCta">Get in touch</span> <span style="color:var(--red); font-weight:800;">></span></a>
+  <div class="nav-hamburger" onclick="toggleMenu(this)">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+
+<!-- ─── HERO ─────────────────────────────────────────────── -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-logo"><span style="color:var(--blue)">Aï</span><span style="font-style:normal;">e</span><span class="dot">.</span></div>
+    <h1 class="hero-tagline">
+      <a href="#services" class="hero-tagline-link">
+        <span class="green" data-i18n="heroDare">Dare</span> <span style="color:#444;" data-i18n="heroShift">the shift</span><span class="red" style="font-weight:800; font-size:1.15em;">></span>
+      </a>
+    </h1>
+    <p class="hero-sub" data-i18n="heroSub"><span style="color:#FF6B00; font-weight:700;">AI transformation</span> for <strong>trading firms</strong>.</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-ghost">
+        <span data-i18n="heroSeeHow">See how it works</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <a href="#contact"><img id="hero-img" src="shift.png" alt="Dare the shift — keyboard Shift key"></a>
+  </div>
+
+</section>
+
+<div style="height: 120px; background: var(--blue); position: relative; z-index: 6; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 40px)); margin-bottom: -40px;"></div>
+
+<!-- ─── SERVICES ─────────────────────────────────────────── -->
+<section class="section" id="services" style="background: linear-gradient(60deg, #FFECEB 40%, #FFFFFF 40%);">
+  <p class="section-label reveal" data-i18n="servicesLabel"><span style="color:#FF3B30">What</span><span style="color:var(--black)">'s Aïe</span><span style="color:var(--blue)">.</span></p>
+  <div class="section-rule reveal reveal-delay-1"></div>
+  <h2 class="section-title reveal reveal-delay-1" data-i18n="servicesTitle">AI transformation,<br>end to end.</h2>
+  <p class="section-body reveal reveal-delay-2" data-i18n="servicesBody">
+    We work across the full stack — from strategy to production — identify
+    high-leverage AI opportunities, and build a prioritised transformation
+    roadmap tied to P&L impact.
+  </p>
+
+  <div class="services-grid">
+
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <path d="M10 4h14l8 8v22a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" stroke="#FF3B30" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M24 4v8h8" stroke="#FF3B30" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M13 20l4 4 8-9" stroke="#FF3B30" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="service-title" data-i18n="card1Title">Product</div>
+      <p class="service-desc" data-i18n="card1Desc">
+        Define your need with an AI agent trained on your stack to produce
+        the change specification — ready for review and build.
+      </p>
+      <span class="service-tag" data-i18n="card1Tag">Product</span>
+    </div>
+
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <path d="M14 12L4 20l10 8" stroke="#FFD600" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M26 12l10 8-10 8" stroke="#FFD600" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M23 6l-6 28" stroke="#FFD600" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="service-title" data-i18n="card2Title">Automatic Feature Implementation</div>
+      <p class="service-desc" data-i18n="card2Desc">
+        An agent trained on your coding style, performance requirements, and
+        full-stack awareness implements the feature, PR ready to be reviewed.
+      </p>
+      <span class="service-tag" data-i18n="card2Tag">Engineering</span>
+    </div>
+
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <circle cx="17" cy="17" r="10" stroke="#111" stroke-width="2"/>
+          <path d="M24.5 24.5L36 36" stroke="#111" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M13 17a4 4 0 0 1 4-4" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="service-title" data-i18n="card3Title">Application Support</div>
+      <p class="service-desc" data-i18n="card3Desc">
+        Reduce investigation cost and accelerate issue fixing across your
+        production systems.
+      </p>
+      <span class="service-tag" data-i18n="card3Tag">Support</span>
+    </div>
+
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <path d="M6 8h28a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H16l-8 7v-7H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2Z" stroke="#0052FF" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M11 16h18M11 22h11" stroke="#0052FF" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="service-title" data-i18n="card4Title">Interactivity</div>
+      <p class="service-desc" data-i18n="card4Desc">
+        A chatbot that answers anything you'd usually ask your developers
+        and support team, from specification details to post-trade analysis.
+      </p>
+      <span class="service-tag" data-i18n="card4Tag">Chatbot</span>
+    </div>
+
+  </div>
+</section>
+
+<div style="height: 120px; background: var(--red); position: relative; z-index: 4; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 40px)); margin-bottom: -40px;"></div>
+
+<!-- ─── WHY AIE ───────────────────────────────────────────── -->
+<section class="why-section" id="why">
+  <p class="section-label reveal" data-i18n="whyLabel"><span style="color:#00C853">Why</span><span style="color:var(--black)"> Aïe</span><span style="color:var(--blue)">.</span></p>
+  <div class="section-rule reveal reveal-delay-1"></div>
+  <h2 class="section-title reveal reveal-delay-1" data-i18n="whyTitle">Built for financial markets.<br>Not generic AI.</h2>
+
+  <div class="why-grid">
+
+    <div class="why-item reveal">
+      <div class="why-number">01</div>
+      <div class="why-title" data-i18n="why1Title">Domain depth</div>
+      <p class="why-desc" data-i18n="why1Desc">
+        We've worked inside trading firms — quant shops, hedge funds, prop desks.
+        We know the data, the latency constraints, the compliance pressures.
+      </p>
+    </div>
+
+    <div class="why-item reveal reveal-delay-1">
+      <div class="why-number">02</div>
+      <div class="why-title" data-i18n="why2Title">End-to-end ownership</div>
+      <p class="why-desc" data-i18n="why2Desc">
+        From first workshop to live production deployment. No handing off to a
+        different team or leaving you with a prototype.
+      </p>
+    </div>
+
+    <div class="why-item reveal reveal-delay-2">
+      <div class="why-number">03</div>
+      <div class="why-title" data-i18n="why3Title">Ownership awareness</div>
+      <p class="why-desc" data-i18n="why3Desc">
+        We propose the best model option to meet your confidentiality,
+        privacy, and regulation constraints.
+      </p>
+    </div>
+
+    <div class="why-item reveal reveal-delay-3">
+      <div class="why-number">04</div>
+      <div class="why-title" data-i18n="why4Title">Speed to value</div>
+      <p class="why-desc" data-i18n="why4Desc">
+        We run in short iterations with clear milestones. You see working systems
+        in weeks, not quarters.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<div style="height: 120px; background: #00C853; position: relative; z-index: 2; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 40px)); margin-bottom: -40px;"></div>
+
+<!-- ─── CTA ──────────────────────────────────────────────── -->
+<section class="cta-section" id="contact">
+  <p class="section-label" style="color:rgba(255,255,255,.6)" data-i18n="ctaLabel">Get started</p>
+  <h2 class="section-title reveal" data-i18n="ctaTitle">Ready to dare the shift?</h2>
+  <p class="section-body reveal reveal-delay-1" data-i18n="ctaBody">
+    Tell us about your firm and where you want to go. We'll come back with a
+    clear perspective — no commitment needed.
+  </p>
+  <a href="mailto:hello@aie.ai" class="btn-white reveal reveal-delay-2">
+    <span data-i18n="ctaButton">Book a discovery call</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#0052FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <p class="cta-email reveal reveal-delay-3">
+    <span data-i18n="ctaEmailPrefix">Or email us directly: </span><a href="mailto:hello@aie.ai">hello@aie.ai</a>
+  </p>
+  <div style="margin-top:48px; display:flex; gap:16px; justify-content:center; font-size:13px; color:rgba(255,255,255,.7);">
+    <span>© 2024 Aïe<span style="color:var(--black)">.</span><span data-i18n="copyrightRest"> All rights reserved.</span></span>
+    <span data-i18n="footerTagline">Dare the shift.</span>
+  </div>
+</section>
+
+
+<script>
+  // i18n
+  const translations = {
+    en: {
+      navWhatWord: 'What',
+      navWhatRest: "'s Aïe",
+      navWhyWord: 'Why',
+      navWhyRest: ' Aïe',
+      navCta: 'Get in touch',
+      heroDare: 'Dare',
+      heroShift: 'the shift',
+      heroSub: '<span style="color:#FF6B00; font-weight:700;">AI transformation</span> for <strong>trading firms</strong>.',
+      heroSeeHow: 'See how it works',
+      heroImgAlt: 'Dare the shift — keyboard Shift key',
+      servicesLabel: '<span style="color:#FF3B30">What</span><span style="color:var(--black)">\'s Aïe</span><span style="color:var(--blue)">.</span>',
+      servicesTitle: 'AI transformation,<br>end to end.',
+      servicesBody: 'We work across the full stack — from strategy to production — identify high-leverage AI opportunities, and build a prioritised transformation roadmap tied to P&L impact.',
+      card1Title: 'Product',
+      card1Desc: 'Define your need with an AI agent trained on your stack to produce the change specification — ready for review and build.',
+      card1Tag: 'Product',
+      card2Title: 'Automatic Feature Implementation',
+      card2Desc: 'An agent trained on your coding style, performance requirements, and full-stack awareness implements the feature, PR ready to be reviewed.',
+      card2Tag: 'Engineering',
+      card3Title: 'Application Support',
+      card3Desc: 'Reduce investigation cost and accelerate issue fixing across your production systems.',
+      card3Tag: 'Support',
+      card4Title: 'Interactivity',
+      card4Desc: "A chatbot that answers anything you'd usually ask your developers and support team, from specification details to post-trade analysis.",
+      card4Tag: 'Chatbot',
+      whyLabel: '<span style="color:#00C853">Why</span><span style="color:var(--black)"> Aïe</span><span style="color:var(--blue)">.</span>',
+      whyTitle: 'Built for financial markets.<br>Not generic AI.',
+      why1Title: 'Domain depth',
+      why1Desc: "We've worked inside trading firms — quant shops, hedge funds, prop desks. We know the data, the latency constraints, the compliance pressures.",
+      why2Title: 'End-to-end ownership',
+      why2Desc: 'From first workshop to live production deployment. No handing off to a different team or leaving you with a prototype.',
+      why3Title: 'Ownership awareness',
+      why3Desc: 'We propose the best model option to meet your confidentiality, privacy, and regulation constraints.',
+      why4Title: 'Speed to value',
+      why4Desc: 'We run in short iterations with clear milestones. You see working systems in weeks, not quarters.',
+      ctaLabel: 'Get started',
+      ctaTitle: 'Ready to dare the shift?',
+      ctaBody: "Tell us about your firm and where you want to go. We'll come back with a clear perspective — no commitment needed.",
+      ctaButton: 'Book a discovery call',
+      ctaEmailPrefix: 'Or email us directly: ',
+      copyrightRest: ' All rights reserved.',
+      footerTagline: 'Dare the shift.',
+      pageTitle: 'Aïe. — Dare the shift.',
+      metaDesc: 'AI transformation consulting for trading firms. Speed, precision, and automation — built for financial markets.'
+    },
+    fr: {
+      navWhatWord: 'Notre',
+      navWhatRest: ' Métier',
+      navWhyWord: 'Notre',
+      navWhyRest: ' Spécificité',
+      navCta: 'Nous contacter',
+      heroDare: 'Dare',
+      heroShift: 'the shift',
+      heroSub: '<span style="color:#FF6B00; font-weight:700;">Transformation IA</span> pour <strong>les sociétés de trading</strong>.',
+      heroSeeHow: 'Voir comment ça marche',
+      heroImgAlt: 'Dare the shift — touche Maj du clavier',
+      servicesLabel: '<span style="color:#FF3B30">Quoi</span><span style="color:var(--black)"> Aïe</span><span style="color:var(--blue)">.</span>',
+      servicesTitle: 'Transformation IA,<br>de bout en bout.',
+      servicesBody: "Nous intervenons sur toute la chaîne — de la stratégie à la production — nous identifions les opportunités IA à fort impact, et construisons une feuille de route de transformation priorisée, alignée sur l'impact P&L.",
+      card1Title: 'Produit',
+      card1Desc: 'Définissez votre besoin avec un agent IA entraîné sur votre stack pour produire la spécification de changement — prête à être revue et développée.',
+      card1Tag: 'Produit',
+      card2Title: 'Implémentation automatique de fonctionnalités',
+      card2Desc: 'Un agent entraîné sur votre style de code, vos exigences de performance et une connaissance complète de votre stack implémente la fonctionnalité, avec une PR prête à être revue.',
+      card2Tag: 'Ingénierie',
+      card3Title: 'Support applicatif',
+      card3Desc: "Réduisez le coût d'investigation et accélérez la résolution des incidents sur vos systèmes de production.",
+      card3Tag: 'Support',
+      card4Title: 'Interactivité',
+      card4Desc: "Un chatbot qui répond à tout ce que vous demanderiez habituellement à vos développeurs et à votre équipe support, des détails de spécification à l'analyse post-trade.",
+      card4Tag: 'Chatbot',
+      whyLabel: '<span style="color:#00C853">Pourquoi</span><span style="color:var(--black)"> Aïe</span><span style="color:var(--blue)">.</span>',
+      whyTitle: 'Conçu pour les marchés financiers.<br>Pas une IA générique.',
+      why1Title: 'Expertise métier',
+      why1Desc: 'Nous avons travaillé au sein de sociétés de trading — quant shops, hedge funds, prop desks. Nous connaissons les données, les contraintes de latence, les exigences de conformité.',
+      why2Title: 'Prise en charge de bout en bout',
+      why2Desc: "Du premier atelier jusqu'au déploiement en production. Pas de transfert à une autre équipe, pas de simple prototype laissé de côté.",
+      why3Title: 'Souveraineté des données',
+      why3Desc: 'Nous proposons la meilleure option de modèle pour répondre à vos contraintes de confidentialité, de protection des données et de réglementation.',
+      why4Title: 'Rapidité de mise en œuvre',
+      why4Desc: 'Nous travaillons par itérations courtes avec des jalons clairs. Vous voyez des systèmes fonctionnels en quelques semaines, pas en trimestres.',
+      ctaLabel: 'Commencer',
+      ctaTitle: 'Dare the shift',
+      ctaBody: 'Parlez-nous de votre société et de vos objectifs. Nous reviendrons vers vous avec une vision claire — sans engagement.',
+      ctaButton: 'Réserver un appel découverte',
+      ctaEmailPrefix: 'Ou écrivez-nous directement : ',
+      copyrightRest: ' Tous droits réservés.',
+      footerTagline: 'Dare the shift.',
+      pageTitle: 'Aïe. — Dare the shift.',
+      metaDesc: 'Conseil en transformation IA pour les sociétés de trading. Rapidité, précision et automatisation — conçus pour les marchés financiers.'
+    }
+  };
+
+  function applyLang(lang) {
+    const t = translations[lang];
+    if (!t) return;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    document.title = t.pageTitle;
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', t.metaDesc);
+    const img = document.getElementById('hero-img');
+    if (img) img.alt = t.heroImgAlt;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-lang-btn]').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang-btn') === lang);
+    });
+    localStorage.setItem('aie-lang', lang);
+  }
+
+  function setLang(lang) { applyLang(lang); }
+
+  const savedLang = localStorage.getItem('aie-lang')
+    || (navigator.language && navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en');
+  applyLang(savedLang);
+
+  // Nav scroll shadow
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Mobile menu
+  function toggleMenu(btn) {
+    const links = document.querySelector('.nav-links');
+    const cta = document.querySelector('.nav-cta');
+    const open = links.style.display === 'flex';
+    if (open) {
+      links.style.display = '';
+      cta.style.display = '';
+    } else {
+      links.style.cssText = 'display:flex; flex-direction:column; position:fixed; top:68px; left:0; right:0; background:#fff; padding:24px; gap:20px; border-bottom:1px solid #E8E8E8; z-index:199;';
+      cta.style.cssText = 'display:block; position:fixed; top:68px; left:0; right:0; margin-top:140px; text-align:center; border-radius:0; z-index:199;';
+    }
+  }
+</script>
+
+</body>
+</html>
